@@ -68,81 +68,20 @@
         <p>Prendas y accesorios más demandados por el público general, listos para importación directa en volumen.</p>
       </div>
 
-      <div class="catalog-grid">
-        <!-- Item 1: Chaquetas -->
-        <article class="product-card">
-          <div class="product-badge">Top Ventas</div>
-          <div class="product-icon">🧥</div>
-          <div class="product-body">
-            <h3>Chaquetas Térmicas Impermeables</h3>
-            <p class="product-desc">Costuras termoselladas, forro cortavientos de alta resistencia térmica. Ideal para
-              temporadas frías.</p>
-            <div class="product-meta">
-              <span class="price-wholesale">Desde $12.50 USD</span>
-              <span class="moq">MOQ: 50 unidades</span>
-            </div>
+      <div class="catalog-controls">
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Buscar por nombre o categoría (ej. chaquetas)...">
+        </div>
+        <div id="favoritesSection" class="favorites-container">
+          <h3>Tus Favoritos (<span id="favCount">0</span>)</h3>
+          <div id="favoritesList">
+            <!-- JS renderizará los favoritos aquí -->
           </div>
-        </article>
+        </div>
+      </div>
 
-        <!-- Item 2: Zapatillas -->
-        <article class="product-card">
-          <div class="product-badge">Premium</div>
-          <div class="product-icon">👟</div>
-          <div class="product-body">
-            <h3>Zapatillas Deportivas Urban Pro</h3>
-            <p class="product-desc">Suelas de goma vulcanizada de alta tracción y malla transpirable de fibra elástica.
-              Estilo urbano moderno.</p>
-            <div class="product-meta">
-              <span class="price-wholesale">Desde $18.90 USD</span>
-              <span class="moq">MOQ: 30 pares</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Item 3: Calcetines -->
-        <article class="product-card">
-          <div class="product-badge">Pack Mayorista</div>
-          <div class="product-icon">🧦</div>
-          <div class="product-body">
-            <h3>Pack Calcetines Deportivos Algodón</h3>
-            <p class="product-desc">Tejido de alto rendimiento en algodón peinado con soporte elástico y zonas de
-              amortiguación reforzadas.</p>
-            <div class="product-meta">
-              <span class="price-wholesale">Desde $0.65 USD</span>
-              <span class="moq">MOQ: 500 packs</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Item 4: Mochilas -->
-        <article class="product-card">
-          <div class="product-badge">Urbano</div>
-          <div class="product-icon">🎒</div>
-          <div class="product-body">
-            <h3>Mochilas de Cordura Porta-Laptops</h3>
-            <p class="product-desc">Compartimento acolchado para laptops de hasta 16", cierres YKK repelentes al agua y
-              costuras de alta resistencia.</p>
-            <div class="product-meta">
-              <span class="price-wholesale">Desde $7.20 USD</span>
-              <span class="moq">MOQ: 100 unidades</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Item 5: Banano / Fanny Pack -->
-        <article class="product-card">
-          <div class="product-badge">Tendencia</div>
-          <div class="product-icon">💼</div>
-          <div class="product-body">
-            <h3>Bananos Ajustables de Ripstop</h3>
-            <p class="product-desc">Bananos (cangureras) compactas con múltiples bolsillos organizadores. Impermeables y
-              ligeros para uso diario.</p>
-            <div class="product-meta">
-              <span class="price-wholesale">Desde $3.10 USD</span>
-              <span class="moq">MOQ: 150 unidades</span>
-            </div>
-          </div>
-        </article>
+      <div class="catalog-grid" id="catalogGrid">
+        <!-- JS renderizará el catálogo aquí -->
       </div>
     </section>
 
