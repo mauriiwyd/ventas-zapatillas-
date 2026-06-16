@@ -1,121 +1,170 @@
-// 1. Arreglos y Objetos (mínimo 1 de cada uno)
-// Arreglo de objetos que simula nuestra base de datos de películas
-const movies = [
-    { id: 1, title: "Inception", genre: "Ciencia Ficción" },
-    { id: 2, title: "The Dark Knight", genre: "Acción" },
-    { id: 3, title: "Interstellar", genre: "Ciencia Ficción" },
-    { id: 4, title: "Parasite", genre: "Drama" },
-    { id: 5, title: "Avengers: Endgame", genre: "Acción" },
-    { id: 6, title: "Spirited Away", genre: "Animación" },
-    { id: 7, title: "The Matrix", genre: "Ciencia Ficción" },
-    { id: 8, title: "Joker", genre: "Drama" }
+// 1. Variables, Arreglos y Objetos (let, const)
+const productos = [
+    {
+        id: 1,
+        nombre: "Chaquetas Térmicas Impermeables",
+        descripcion: "Costuras termoselladas, forro cortavientos de alta resistencia térmica. Ideal para temporadas frías.",
+        precio: "Desde $12.50 USD",
+        moq: "MOQ: 50 unidades",
+        badge: "Top Ventas",
+        icono: "🧥",
+        categoria: "chaquetas"
+    },
+    {
+        id: 2,
+        nombre: "Zapatillas Deportivas Urban Pro",
+        descripcion: "Suelas de goma vulcanizada de alta tracción y malla transpirable de fibra elástica. Estilo urbano moderno.",
+        precio: "Desde $18.90 USD",
+        moq: "MOQ: 30 pares",
+        badge: "Premium",
+        icono: "👟",
+        categoria: "zapatillas"
+    },
+    {
+        id: 3,
+        nombre: "Pack Calcetines Deportivos Algodón",
+        descripcion: "Tejido de alto rendimiento en algodón peinado con soporte elástico y zonas de amortiguación reforzadas.",
+        precio: "Desde $0.65 USD",
+        moq: "MOQ: 500 packs",
+        badge: "Pack Mayorista",
+        icono: "🧦",
+        categoria: "calcetines"
+    },
+    {
+        id: 4,
+        nombre: "Mochilas de Cordura Porta-Laptops",
+        descripcion: "Compartimento acolchado para laptops de hasta 16\", cierres YKK repelentes al agua y costuras de alta resistencia.",
+        precio: "Desde $7.20 USD",
+        moq: "MOQ: 100 unidades",
+        badge: "Urbano",
+        icono: "🎒",
+        categoria: "mochilas"
+    },
+    {
+        id: 5,
+        nombre: "Bananos Ajustables de Ripstop",
+        descripcion: "Bananos (cangureras) compactas con múltiples bolsillos organizadores. Impermeables y ligeros para uso diario.",
+        precio: "Desde $3.10 USD",
+        moq: "MOQ: 150 unidades",
+        badge: "Tendencia",
+        icono: "💼",
+        categoria: "bananos"
+    }
 ];
 
-// Arreglo para guardar los favoritos (uso de let porque puede cambiar si lo vaciamos después, o const si solo usamos push/splice)
-let favorites = [];
+// Arreglo para guardar los favoritos (modificable con let)
+let favoritos = [];
 
 // 2. Manipulación del DOM (querySelector)
-const moviesContainer = document.querySelector('#moviesContainer');
-const favoritesContainer = document.querySelector('#favoritesContainer');
+const catalogGrid = document.querySelector('#catalogGrid');
 const searchInput = document.querySelector('#searchInput');
+const favoritesList = document.querySelector('#favoritesList');
+const favCount = document.querySelector('#favCount');
 
-// 3. Funciones y renderizado dinámico
-// Arrow function requerida por la rúbrica
-const renderMovies = (movieList) => {
-    // Limpiamos el contenedor antes de renderizar
-    moviesContainer.innerHTML = '';
+// 3. Funciones y renderizado dinámico (Arrow function)
+const renderProductos = (listaProductos) => {
+    // Limpiamos el contenedor
+    catalogGrid.innerHTML = '';
 
-    // Uso de if para cuando no hay resultados en la búsqueda
-    if (movieList.length === 0) {
-        moviesContainer.innerHTML = '<p>No se encontraron películas.</p>';
-        return; // Salimos de la función
-    }
-
-    // Uso de ciclo (forEach)
-    movieList.forEach(movie => {
-        // Verificar si ya está en favoritos
-        const isFavorite = favorites.some(fav => fav.id === movie.id);
-
-        // Modificación dinámica del HTML
-        const movieCard = document.createElement('div');
-        movieCard.className = 'movie-card';
-        
-        movieCard.innerHTML = `
-            <h3>${movie.title}</h3>
-            <p>${movie.genre}</p>
-            <button class="btn-fav ${isFavorite ? 'remove' : ''}" onclick="toggleFavorite(${movie.id})">
-                ${isFavorite ? 'Quitar de Favoritos' : 'Agregar a Favoritos'}
-            </button>
-        `;
-        
-        moviesContainer.appendChild(movieCard);
-    });
-};
-
-// Función para renderizar los favoritos en el panel lateral
-function renderFavorites() {
-    favoritesContainer.innerHTML = '';
-
-    // Uso de if
-    if (favorites.length === 0) {
-        favoritesContainer.innerHTML = '<p>Aún no tienes favoritos.</p>';
+    // Uso de condicional if (requerimiento de la rúbrica)
+    if (listaProductos.length === 0) {
+        catalogGrid.innerHTML = '<p class="no-results">No se encontraron productos con esa búsqueda.</p>';
         return;
     }
 
-    // Uso de ciclo (for clásico u otro)
-    for (let i = 0; i < favorites.length; i++) {
-        const fav = favorites[i];
+    // Uso de ciclo forEach para iterar y modificar el HTML
+    listaProductos.forEach(producto => {
+        // Arrow function interna
+        const esFavorito = favoritos.some(fav => fav.id === producto.id);
+
+        const card = document.createElement('article');
+        card.className = 'product-card';
         
-        const favElement = document.createElement('div');
-        favElement.className = 'favorite-item';
-        favElement.innerHTML = `
-            <span>${fav.title}</span>
-            <button onclick="toggleFavorite(${fav.id})" title="Quitar">❌</button>
+        card.innerHTML = `
+            <div class="product-badge">${producto.badge}</div>
+            <div class="product-icon">${producto.icono}</div>
+            <div class="product-body">
+                <h3>${producto.nombre}</h3>
+                <p class="product-desc">${producto.descripcion}</p>
+                <div class="product-meta">
+                    <span class="price-wholesale">${producto.precio}</span>
+                    <span class="moq">${producto.moq}</span>
+                </div>
+                <!-- Funcionalidad del sistema de favoritos con modificación dinámica -->
+                <button class="btn btn-fav ${esFavorito ? 'btn-remove' : 'btn-add'}" onclick="toggleFavorito(${producto.id})">
+                    ${esFavorito ? 'Quitar de Favoritos ❌' : 'Agregar a Favoritos ⭐'}
+                </button>
+            </div>
         `;
         
-        favoritesContainer.appendChild(favElement);
+        catalogGrid.appendChild(card);
+    });
+};
+
+// Función para renderizar los favoritos
+function renderFavoritos() {
+    favoritesList.innerHTML = '';
+    favCount.textContent = favoritos.length;
+
+    if (favoritos.length === 0) {
+        favoritesList.innerHTML = '<p class="empty-favs">No hay favoritos guardados.</p>';
+        return;
+    }
+
+    // Ciclo for tradicional requerido por la rúbrica (como alternativa a forEach)
+    for (let i = 0; i < favoritos.length; i++) {
+        const fav = favoritos[i];
+        
+        const favItem = document.createElement('div');
+        favItem.className = 'fav-item';
+        favItem.innerHTML = `
+            <span class="fav-icon">${fav.icono}</span>
+            <span class="fav-name">${fav.nombre}</span>
+            <button class="btn-remove-fav" onclick="toggleFavorito(${fav.id})" title="Quitar">❌</button>
+        `;
+        
+        favoritesList.appendChild(favItem);
     }
 }
 
-// 4. Sistema de favoritos
-// Función propia para agregar o quitar favoritos
-function toggleFavorite(id) {
-    // Buscamos si la película ya está en favoritos
-    const index = favorites.findIndex(fav => fav.id === id);
+// 4. Sistema de favoritos (Función propia)
+function toggleFavorito(id) {
+    const index = favoritos.findIndex(fav => fav.id === id);
 
     if (index !== -1) {
-        // Si ya está, la quitamos (uso de let/const y condicionales)
-        favorites.splice(index, 1);
+        // Eliminar del arreglo si ya existe
+        favoritos.splice(index, 1);
     } else {
-        // Si no está, la buscamos en el arreglo original y la agregamos
-        const movieToAdd = movies.find(m => m.id === id);
-        if (movieToAdd) {
-            favorites.push(movieToAdd);
+        // Agregar al arreglo
+        const producto = productos.find(p => p.id === id);
+        if (producto) {
+            favoritos.push(producto);
         }
     }
 
-    // Volvemos a renderizar para que los botones y la lista se actualicen
-    renderMovies(movies); // Podríamos pasarle la lista filtrada actual, pero por simplicidad pasamos todas o disparamos la búsqueda
-    triggerSearch(); // Esto mantiene el filtro activo cuando damos click a favorito
-    renderFavorites();
+    // Actualizar ambas vistas y mantener filtro de búsqueda si lo hay
+    triggerBusqueda(); 
+    renderFavoritos();
 }
 
-// 5. Búsqueda o filtro dinámico
-// Evento para el buscador (addEventListener)
-searchInput.addEventListener('input', triggerSearch);
+// 5. Búsqueda o filtro dinámico (Eventos y Funciones)
+function triggerBusqueda() {
+    const termino = searchInput.value.toLowerCase();
 
-function triggerSearch() {
-    const searchTerm = searchInput.value.toLowerCase();
-
-    // Filtramos usando arrow function dentro de filter
-    const filteredMovies = movies.filter(movie => {
-        return movie.title.toLowerCase().includes(searchTerm) || 
-               movie.genre.toLowerCase().includes(searchTerm);
+    // Filtro dinámico 
+    const filtrados = productos.filter(producto => {
+        return producto.nombre.toLowerCase().includes(termino) || 
+               producto.categoria.toLowerCase().includes(termino);
     });
 
-    renderMovies(filteredMovies);
+    renderProductos(filtrados);
 }
 
-// Render inicial al cargar la página
-renderMovies(movies);
-renderFavorites();
+// addEventListener para búsqueda dinámica
+searchInput.addEventListener('input', triggerBusqueda);
+
+// Inicializar la vista al cargar
+document.addEventListener('DOMContentLoaded', () => {
+    renderProductos(productos);
+    renderFavoritos();
+});
